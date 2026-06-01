@@ -1,4 +1,8 @@
+import { useAuth } from "../../context/AuthContext"
+
 function Topbar() {
+
+    const { logout } = useAuth()
     return(
         <header className="h-24 border-b border-zinc-800 flex intems-center justify-between px-10 bg-zinc-950">
 
@@ -16,8 +20,12 @@ function Topbar() {
 
             <div className="flex intems-center gap-6">
 
-                <button className="bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-2x1 hover:border-green-400 transition">
-                    Notifications
+                <button
+                onClick={logout}
+                 className="bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-2x1 hover:border-green-400 transition">
+
+                    Logout
+
                 </button>
 
                 <div className="w-12 h-12 rounded-full bg-green-400 text-black flex intems-center justify-center font-black">

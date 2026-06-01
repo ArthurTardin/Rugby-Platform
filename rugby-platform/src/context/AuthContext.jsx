@@ -1,0 +1,36 @@
+import { useState} from 'react'
+import { AuthContext } from './auth-context'
+
+function AuthProvider({
+    children,
+}) {
+    const [user, setUser] = useState(null)
+
+    function login(userData) {
+        setUser(userData)
+
+    }
+
+    function logout() {
+        setUser(null)
+
+    }
+
+    return(
+        <AuthContext.Provider
+        value={{
+            user,
+            login,
+            logout,
+        }}
+        >
+
+            {children}
+
+        </AuthContext.Provider>
+
+    )
+
+}
+
+export default AuthProvider

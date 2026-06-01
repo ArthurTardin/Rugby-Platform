@@ -15,6 +15,8 @@ import NewMatches from '../pages/Dashboard/Matches/NewMatches.jsx'
 import DashboardReferees from '../pages/Dashboard/Referees/DashboardReferees.jsx'
 import DashboardAnalytics from '../pages/Dashboard/Analytics/DashboardAnalytics.jsx'
 import DashboardSettings from '../pages/Dashboard/Settings/DashboardSettings.jsx'
+import Login from '../pages/Auth/Login.jsx'
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 function AppRoutes() {
     return(
@@ -27,7 +29,7 @@ function AppRoutes() {
                  />
 
                  <Route
-                 path='/dashboard/referees' element={<DashboardReferees />} />
+                 path='/dashboard/referees' element={<ProtectedRoute> <DashboardReferees /> </ProtectedRoute>} />
 
                  <Route
                  path='/referees' element={<Referees />}
@@ -46,23 +48,27 @@ function AppRoutes() {
                 />
 
                 <Route
-                    path='/dashboard' element={<Dashboard />}
+                    path='/dashboard' element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>}
                 />
 
                  <Route
-                    path='/dashboard/matches/new' element={<NewMatches />}
+                    path='/dashboard/matches/new' element={<ProtectedRoute> <NewMatches /> </ProtectedRoute>}
                 />
 
                 <Route
-                    path='/dashboard/matches' element={<DashboardMatches />}
+                    path='/dashboard/matches' element={<ProtectedRoute> <DashboardMatches /> </ProtectedRoute>}
                 />
 
                 <Route
-                    path='/dashboard/analytics' element={<DashboardAnalytics />}
+                    path='/dashboard/analytics' element={<ProtectedRoute> <DashboardAnalytics /> </ProtectedRoute>}
                 />
 
                 <Route
-                path='/dashboard/settings' element={<DashboardSettings />}
+                path='/dashboard/settings' element={<ProtectedRoute> <DashboardSettings /> </ProtectedRoute>}
+                />
+
+                <Route
+                path='/login' element={<Login />}
                 />
 
             </Routes>

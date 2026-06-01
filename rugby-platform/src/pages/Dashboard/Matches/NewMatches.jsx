@@ -3,15 +3,31 @@ import { useState } from 'react'
 import Input from '../../../components/Input/Input.jsx'
 import Button from '../../../components/Button/Button.jsx'
 import Select from '../../../components/Select/Select.jsx'
+import { createMatch } from '../../../services/api/matches.js'
+import Toast from '../../../components/Toast/Toast.jsx'
+import { useEffect } from 'react'
+import ErrorToast from '../../../components/ErrorToast/ErrorToast.jsx'
 
 
 function NewMatch() {
+  const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [homeTeam, setHomeTeam] = useState('')
   const [awayTeam, setAwayTeam] = useState('')
   const [matchDate, setMatchDate] = useState('')
 
   const [sucess, setSucess] = useState(false)
+
+  useEffect(() => {
+    if (sucess){
+      setTimeout(() => {
+        setSucess(false)
+        
+      }, 3000)
+
+    }
+
+  }, [sucess])
 
   
 
@@ -24,17 +40,30 @@ function NewMatch() {
       awayTeam,
     })
 
-    await new Promise((resolve) => setTimeout(resolve, 2000)
-  )
+    try {
+      await createMatch({
+      homeTeam,
+      awayTeam,
+      matchDate,
+    })
 
     setSucess(true)
-    
-
-    setHomeTeam('')
+     setHomeTeam('')
     setAwayTeam('')
     setMatchDate('')
-    setLoading(false)
+    setMatchDate('')
+    
+    }
+    catch (error) {
+      console.error(error)
+      setError(true)
 
+    }
+    finally {
+      setLoading(false)
+
+    }
+    
   }
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-10">
@@ -110,14 +139,19 @@ function NewMatch() {
         </form>
         {
           sucess && (
-            <div className='mt-6 bg-green-400 text-black p-4 rounded-2x1 font-bold'>
-
-              Match created Sucessfully!
-
-            </div>
+            <Toast
+            message="Match created sucessfully!" 
+            
+            />
 
           )
 
+        }
+
+        {
+          error && (
+            <ErrorToast message="failed to create match." />
+          )
         }
 
       </div>
